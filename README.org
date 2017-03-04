@@ -1,1 +1,25 @@
 #+TITLE: Modelling Semantic Relations with Distributional Semantics and Deep Learning: Question Answering, Entailment Recognition and Paraphrase Detection
+* Prerequisites
+** Distributional models
+   1. Download and extract distributional models
+      #+BEGIN_SRC sh
+        wget http://lxcenter.di.fc.ul.pt/datasets/vlad.tar.gz
+      #+END_SRC
+
+      #+BEGIN_SRC sh
+        tar -xvf vlad.tar.gz
+      #+END_SRC
+
+* Question Answering
+** Replication
+** Impact of text preprocessing
+** Impact of word embeddings
+* Portuguese Entailment Recognition
+** Run 1
+** Run 2
+* Russian Paraphrase Detection
+** Non-standard run
+** Standard run
+*** Word embeddings
+*** Character embeddings
+
