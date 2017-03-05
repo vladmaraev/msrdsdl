@@ -102,6 +102,6 @@ To change hyperparameters you can modify the method =SentenceSimilarity.set_hype
     #+END_SRC
 
 **** Character embeddings
-    #+BEGIN_SRC sh
+    #+BEGIN_SRC sh :session
       ./cnn.py ru_char --train data/ru/train.tsv  --val data/ru/test.tsv
     #+END_SRC
