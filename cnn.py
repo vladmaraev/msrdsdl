@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 import sys
 import os.path
 import argparse
@@ -16,7 +16,8 @@ from keras.layers import Activation, Convolution1D, Embedding, Merge, Lambda, me
 from keras.optimizers import SGD
 from keras.preprocessing.sequence import pad_sequences
 from keras import backend as K
-from se_preprocess import preprocess_text
+from preprocess import pp_with_duplicate_quote, pp_without_duplicate_quote, pp
+from preprocess_ru import ru_mystem
 
 class SentenceSimilarity:
     data = {}
@@ -77,7 +78,6 @@ class SentenceSimilarity:
     def _preprocess_text(self, text):
         """Clean the input text
         note: just a stub. Keras Tokenizer lowercases text by default."""
-        text = preprocess_text(text)        
         return text
 
     def _parse_tsv(self, filename, data_set, separator='\t'):
@@ -147,7 +147,7 @@ class SentenceSimilarity:
         """
         cache_filename = '{0}.min.cache.npy'.format(self.filename_embeddings)
         embeddings = {}
-        if os.path.isfile(cache_filename):
+        if False:#os.path.isfile(cache_filename):
             logging.info('Load embeddings from cached file {0}:'.format(cache_filename))
             self.embedding_matrix = np.load(cache_filename)
             self.embedding_dim = self.embedding_matrix.shape[1]
@@ -386,11 +386,41 @@ class SentenceSimilarity:
         if self.filename_test:
             self._evaluate_model()
 
+    def set_hyperparameters(self,mode='replicate'):
+        if mode in ['pp_impact', 'we_impact']:
+            self._preprocess_text = lambda x: pp_without_duplicate_quote(x)
+        elif mode == 'pt_1':
+            self._preprocess_text = lambda x: pp(x)
+        elif mode == 'pt_2':
+            self._preprocess_text = lambda x: pp(x)        
+            self.embedding_dim = 300
+            self.conv_filter_dim = 1000
+        elif mode == 'ru_ns':
+            self._preprocess_text = lambda x: ru_mystem(x)
+            self.nb_epoch = 5
+            self.conv_filter_dim = 300
+            self.optimizer = 'rmsprop'
+        elif mode == 'ru_word':
+            self._preprocess_text = lambda x: pp(x)        
+            self.conv_filters = [3,5,8,12]
+            self.optimizer = 'rmsprop'
+            self.embedding_dim = 300
+        elif mode == 'ru_char':
+            self._preprocess_text = lambda x: pp(x)
+            self.conv_filters = [2,3,5,7,9,11]
+            self.conv_filter_dim = 100
+            self.embedding_dim = 100
+            self.optimizer = 'rmsprop'
+            self.nb_epoch = 20
+        else:
+            self._preprocess_text = lambda x: pp_with_duplicate_quote(x)
+            
+
     
 def _handle_command_line():
     description = 'Trains and evaluates a CNN for detecting similarity between pairs of sentences.'
-    parser = argparse.ArgumentParser(description=description,
-                                     epilog='Copyright NLX')
+    parser = argparse.ArgumentParser(description=description)
+    parser.add_argument('mode', help='mode for setting hyperparameters')
     multiple_files_group = parser.add_argument_group('when running over separate data sets')
     multiple_files_group.add_argument('--train', metavar='FILE',
                                       help='file with data for training')
@@ -404,19 +434,12 @@ def _handle_command_line():
     pretrained_model_group.add_argument('--epoch', metavar='FILE',
                                         help='number of epoch to get weights from')
     single_file_group = parser.add_argument_group('when running over a single data set (NOT IMPLEMENTED YET)')
-    single_file_group.add_argument('--fulldata', metavar='FILE',
-                                   help='single file with all data')
-    single_file_group.add_argument('--partition', metavar='SCHEMA',
-                                   help='schema for partitioning data')
     parser.add_argument('--w2v', metavar='FILE',
                         help='file with word embeddings')
-    parser.add_argument('--log', metavar='LEVEL', choices=['INFO', 'DEBUG'], default='INFO',
-                        help='set the logging level (NOT IMPLEMENTED YET)')
     parser.add_argument('--version', action='version', version='%(prog)s 0.2')
     args = vars(parser.parse_args())
     # TODO: check validity of arguments
     return args
-
 
 def main():
     args = _handle_command_line()
@@ -428,17 +451,18 @@ def main():
                                     args['w2v'],
                                     args['uuid'],
                                     args['epoch'])
+    classifier.set_hyperparameters(mode=args['mode'])
     # DEFAULTS can be overriden here
-    #classifier.nb_epoch = 10
-    #classifier.optimizer = 'sgd'
+    # classifier.nb_epoch = 10
+    # classifier.optimizer = 'sgd'
     # classifier.lr = 0.005
     # classifier.validation_split = 0.1
     # classifier.embedding_dim = 100
     # classifier.conv_filter_dim = 300
     # classifier.conv_filters = [3]
     # classifier.char_level = False
-    # classifier.pooling = 'avg'
-    # classifier.normalize = 'ru-pos'
+    classifier.pooling = 'max'
+
     if args['uuid']:
         classifier.load_and_test(
             #separator='|'

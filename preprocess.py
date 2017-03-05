@@ -50,3 +50,12 @@ def preprocess_text(text, operations=[remove_images, remove_code, remove_duplica
     else:
         return text
 
+def pp_with_duplicate_quote(text):
+    return preprocess_text(text, operations=[remove_images, remove_code, remove_urls, remove_tags,nltk_tokenize,words_only,lowercase])
+
+def pp_without_duplicate_quote(text):
+    return preprocess_text(text, operations=[remove_images, remove_code, remove_duplicate_link, remove_urls, remove_tags,nltk_tokenize,words_only,lowercase])
+
+def pp(text):
+    return preprocess_text(text, operations=[nltk_tokenize,words_only,lowercase])
+
