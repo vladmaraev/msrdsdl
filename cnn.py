@@ -16,8 +16,7 @@ from keras.layers import Activation, Convolution1D, Embedding, Merge, Lambda, me
 from keras.optimizers import SGD
 from keras.preprocessing.sequence import pad_sequences
 from keras import backend as K
-from preprocess import pp_with_duplicate_quote, pp_without_duplicate_quote, pp
-from preprocess_ru import ru_mystem
+from preprocess import pp_with_duplicate_quote, pp_without_duplicate_quote, pp, ru_mystem
 
 class SentenceSimilarity:
     data = {}
