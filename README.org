@@ -42,30 +42,30 @@ s
       ./cnn.py we_impact --train data/meta/train.tsv --val data/meta/val.tsv --test data/askubuntu/test.tsv
     #+END_SRC
 
-* Portuguese Entailment Recognition
-** Run 1
-   #+BEGIN_SRC sh
-     ./cnn.py pt_1 --train data/pt_train.tsv  --val data/pt_test.tsv --w2v models/pt.w2v
-   #+END_SRC
+** Portuguese Entailment Recognition
+*** Run 1
+    #+BEGIN_SRC sh
+      ./cnn.py pt_1 --train data/pt_train.tsv  --val data/pt_test.tsv --w2v models/pt.w2v
+    #+END_SRC
 
-** Run 2
-   #+BEGIN_SRC sh
-     ./cnn.py pt_2 --train data/pt_train.tsv  --val data/pt_test.tsv
-   #+END_SRC
+*** Run 2
+    #+BEGIN_SRC sh
+      ./cnn.py pt_2 --train data/pt_train.tsv  --val data/pt_test.tsv
+    #+END_SRC
 
-* Russian Paraphrase Detection
-** Non-standard run
-   #+BEGIN_SRC sh
-     ./cnn.py ru_ns --train data/ru_train.tsv  --val data/ru_test.tsv --w2v models/ruscorpora.model.w2v
-   #+END_SRC
+** Russian Paraphrase Detection
+*** Non-standard run
+    #+BEGIN_SRC sh
+      ./cnn.py ru_ns --train data/ru_train.tsv  --val data/ru_test.tsv --w2v models/ruscorpora.model.w2v
+    #+END_SRC
 
-** Standard run
-*** Word embeddings
-   #+BEGIN_SRC sh
-     ./cnn.py ru_word --train data/ru_train.tsv  --val data/ru_test.tsv
-   #+END_SRC
+*** Standard run
+**** Word embeddings
+    #+BEGIN_SRC sh
+      ./cnn.py ru_word --train data/ru_train.tsv  --val data/ru_test.tsv
+    #+END_SRC
 
-*** Character embeddings
-   #+BEGIN_SRC sh
-     ./cnn.py ru_char --train data/ru_train.tsv  --val data/ru_test.tsv
-   #+END_SRC
+**** Character embeddings
+    #+BEGIN_SRC sh
+      ./cnn.py ru_char --train data/ru_train.tsv  --val data/ru_test.tsv
+    #+END_SRC
