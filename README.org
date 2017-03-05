@@ -10,16 +10,62 @@
         tar -xvf vlad.tar.gz
       #+END_SRC
 
-* Question Answering
-** Replication
-** Impact of text preprocessing
-** Impact of word embeddings
+* About the program
+s
+
+* Replication of my work
+** Question Answering
+*** Replication of the work by Bogdanova et al. (2015)
+    For AskUbuntu dataset:
+    #+BEGIN_SRC sh
+      ./cnn.py replication --train data/askubuntu/train.tsv --val data/askubuntu/val.tsv --test data/askubuntu/test.tsv --w2v models/askubuntu.w2v
+    #+END_SRC
+
+    For META Stackexchange dataset:
+    #+BEGIN_SRC sh
+      ./cnn.py replication --train data/meta/train.tsv --val data/meta/val.tsv --test data/meta/test.tsv --w2v models/meta.w2v
+    #+END_SRC
+
+*** Impact of text preprocessing
+    For AskUbuntu dataset:
+    #+BEGIN_SRC sh
+      ./cnn.py pp_impact --train data/meta/train.tsv --val data/meta/val.tsv --test data/askubuntu/test.tsv --w2v models/askubuntu.w2v
+    #+END_SRC
+
+    For META Stackexchange dataset:    
+    #+BEGIN_SRC sh
+      ./cnn.py pp_impact --train data/meta/train.tsv --val data/meta/val.tsv --test data/meta/test.tsv --w2v models/meta.w2v
+    #+END_SRC
+
+*** Impact of word embeddings
+    #+BEGIN_SRC sh
+      ./cnn.py we_impact --train data/meta/train.tsv --val data/meta/val.tsv --test data/askubuntu/test.tsv
+    #+END_SRC
+
 * Portuguese Entailment Recognition
 ** Run 1
+   #+BEGIN_SRC sh
+     ./cnn.py pt_1 --train data/pt_train.tsv  --val data/pt_test.tsv --w2v models/pt.w2v
+   #+END_SRC
+
 ** Run 2
+   #+BEGIN_SRC sh
+     ./cnn.py pt_2 --train data/pt_train.tsv  --val data/pt_test.tsv
+   #+END_SRC
+
 * Russian Paraphrase Detection
 ** Non-standard run
+   #+BEGIN_SRC sh
+     ./cnn.py ru_ns --train data/ru_train.tsv  --val data/ru_test.tsv --w2v models/ruscorpora.model.w2v
+   #+END_SRC
+
 ** Standard run
 *** Word embeddings
-*** Character embeddings
+   #+BEGIN_SRC sh
+     ./cnn.py ru_word --train data/ru_train.tsv  --val data/ru_test.tsv
+   #+END_SRC
 
+*** Character embeddings
+   #+BEGIN_SRC sh
+     ./cnn.py ru_char --train data/ru_train.tsv  --val data/ru_test.tsv
+   #+END_SRC
