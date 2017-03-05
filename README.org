@@ -1,7 +1,12 @@
 #+TITLE: Modelling Semantic Relations with Distributional Semantics and Deep Learning: Question Answering, Entailment Recognition and Paraphrase Detection
 * Prerequisites
-** Distributional models
-   1. Download and extract distributional models
+   1. Clone source code repository
+   2. You need *Python version 3.4.3 or higher*
+   3. Install required packages
+      #+BEGIN_SRC sh
+        pip install -r requirements.txt
+      #+END_SRC
+   4. Download and extract distributional models
       #+BEGIN_SRC sh
         wget http://lxcenter.di.fc.ul.pt/datasets/vlad.tar.gz
       #+END_SRC
@@ -11,7 +16,38 @@
       #+END_SRC
 
 * About the program
-s
+After installing all the prerequisites you will have the following directory structure: 
+#+BEGIN_SRC 
+├── cnn.py                    # Main application		             
+├── data               	      # Datasets: 			     
+│   ├── askubuntu      	      # - QA: AskUbuntu		     
+│   │   ├── test.tsv	                                            
+│   │   ├── train.tsv	                                            
+│   │   └── val.tsv	                                            
+│   ├── meta           	      # - QA: Meta StackExchange	     
+│   │   ├── test.tsv	                                            
+│   │   ├── train.tsv	                                            
+│   │   └── val.tsv	                                            
+│   ├── pt             	      # - Portuguese Entailment Recognition 
+│   │   ├── test.tsv	                                            
+│   │   └── train.tsv	                                            
+│   └── ru             	      # - Russian Paraphrase Detection      
+│       ├── test.tsv	                                            
+│       └── train.tsv	                                            
+├── __init.py__		                                            
+├── models             	      # - Distributional semantic models    
+│   ├── askubuntu.w2v	                                            
+│   ├── meta.w2v	                                            
+│   ├── pt.w2v		                                            
+│   └── ruscorpora.model.w2v				     
+├── preprocess.py      	      # Preprocessing functions	     
+├── README.org
+└── requirements.txt
+#+END_SRC
+
+You can run the application =./cnn.py= with the =--help= option to see available parameters.
+
+To change hyperparameters you can modify the method =SentenceSimilarity.set_hyperparameters= by adding new modes. 
 
 * Replication of my work
 ** Question Answering
@@ -45,27 +81,27 @@ s
 ** Portuguese Entailment Recognition
 *** Run 1
     #+BEGIN_SRC sh
-      ./cnn.py pt_1 --train data/pt_train.tsv  --val data/pt_test.tsv --w2v models/pt.w2v
+      ./cnn.py pt_1 --train data/pt/train.tsv  --val data/pt/test.tsv --w2v models/pt.w2v
     #+END_SRC
 
 *** Run 2
     #+BEGIN_SRC sh
-      ./cnn.py pt_2 --train data/pt_train.tsv  --val data/pt_test.tsv
+      ./cnn.py pt_2 --train data/pt/train.tsv  --val data/pt/test.tsv
     #+END_SRC
 
 ** Russian Paraphrase Detection
 *** Non-standard run
     #+BEGIN_SRC sh
-      ./cnn.py ru_ns --train data/ru_train.tsv  --val data/ru_test.tsv --w2v models/ruscorpora.model.w2v
+      ./cnn.py ru_ns --train data/ru/train.tsv  --val data/ru/test.tsv --w2v models/ruscorpora.model.w2v
     #+END_SRC
 
 *** Standard run
 **** Word embeddings
     #+BEGIN_SRC sh
-      ./cnn.py ru_word --train data/ru_train.tsv  --val data/ru_test.tsv
+      ./cnn.py ru_word --train data/ru/train.tsv  --val data/ru/test.tsv
     #+END_SRC
 
 **** Character embeddings
     #+BEGIN_SRC sh
-      ./cnn.py ru_char --train data/ru_train.tsv  --val data/ru_test.tsv
+      ./cnn.py ru_char --train data/ru/train.tsv  --val data/ru/test.tsv
     #+END_SRC
