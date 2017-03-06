@@ -411,6 +411,7 @@ class SentenceSimilarity:
             self.embedding_dim = 100
             self.optimizer = 'rmsprop'
             self.nb_epoch = 20
+            self.char_level = True
         else:
             self._preprocess_text = lambda x: pp_with_duplicate_quote(x)
             
