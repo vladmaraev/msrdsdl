@@ -77,6 +77,8 @@ class SentenceSimilarity:
     def _preprocess_text(self, text):
         """Clean the input text
         note: just a stub. Keras Tokenizer lowercases text by default."""
+        pattern_obj = re.compile(r'[^\w\d\s]')
+        text = pattern_obj.sub("", text)
         return text
 
     def _parse_tsv(self, filename, data_set, separator='\t'):
@@ -400,12 +402,10 @@ class SentenceSimilarity:
             self.conv_filter_dim = 300
             self.optimizer = 'rmsprop'
         elif mode == 'ru_word':
-            self._preprocess_text = lambda x: pp(x)        
             self.conv_filters = [3,5,8,12]
             self.optimizer = 'rmsprop'
             self.embedding_dim = 300
         elif mode == 'ru_char':
-            self._preprocess_text = lambda x: pp(x)
             self.conv_filters = [2,3,5,7,9,11]
             self.conv_filter_dim = 100
             self.embedding_dim = 100
@@ -462,7 +462,6 @@ def main():
     # classifier.conv_filters = [3]
     # classifier.char_level = False
     classifier.pooling = 'max'
-
     if args['uuid']:
         classifier.load_and_test(
             #separator='|'
