@@ -1,14 +1,14 @@
 #+TITLE: Modelling Semantic Relations with Distributional Semantics and Deep Learning: Question Answering, Entailment Recognition and Paraphrase Detection
 * Prerequisites
-   1. Clone source code repository
+   1. Download source code
    2. You will need *Python version 3.4.3 or higher*
-   3. Install required packages
+   3. Install required packages:
       #+BEGIN_SRC sh :exports code
         pip install -r requirements.txt
       #+END_SRC
-   4. Download and extract distributional models
+   4. If you want to run experiments that require word embeddings you need to download and extract distributional models:
       #+BEGIN_SRC sh :exports code
-        wget http://lxcenter.di.fc.ul.pt/datasets/vlad.tar.gz
+        wget http://lxcenter.di.fc.ul.pt/datasets/msrdsdl.tar.gz
       #+END_SRC
 
       #+BEGIN_SRC sh :exports code
@@ -45,7 +45,7 @@ After installing all the prerequisites you will have the following directory str
 └── requirements.txt
 #+END_SRC
 
-You can run the application =./cnn.py= with the =--help= option to see available parameters.
+You can run the application =./cnn.py= with the =--help= argument to see available parameters.
 
 To change hyperparameters you can modify the method =SentenceSimilarity. set_hyperparameters= by adding new modes. 
 
