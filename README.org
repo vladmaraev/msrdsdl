@@ -1,4 +1,5 @@
 #+TITLE: Modelling Semantic Relations with Distributional Semantics and Deep Learning: Question Answering, Entailment Recognition and Paraphrase Detection
+
 * Prerequisites
    1. Download source code
    2. You will need *Python version 3.4.3 or higher*
@@ -54,30 +55,30 @@ To change hyperparameters you can modify the method =SentenceSimilarity. set_hyp
 *** Replication of the work by Bogdanova et al. (2015)
     For AskUbuntu dataset:
     #+BEGIN_SRC sh :exports code
-      ./cnn.py replication --train data/askubuntu/train.tsv \
-               --val data/askubuntu/val.tsv \
-               --test data/askubuntu/test.tsv \
+      ./cnn.py replication --train data/askubuntu/clue/train.tsv \
+               --val data/askubuntu/clue/val.tsv \
+               --test data/askubuntu/clue/test.tsv \
                --w2v models/askubuntu.w2v
     #+END_SRC
     For META Stackexchange dataset:
     #+BEGIN_SRC sh :exports code
-      ./cnn.py replication --train data/meta/train.tsv \
-               --val data/meta/val.tsv \
-               --test data/meta/test.tsv \
+      ./cnn.py replication --train data/meta/clue/train.tsv \
+               --val data/meta/clue/val.tsv \
+               --test data/meta/clue/test.tsv \
                --w2v models/meta.w2v
     #+END_SRC
 
 *** Impact of text preprocessing
     For AskUbuntu dataset:
     #+BEGIN_SRC sh :exports code
-      ./cnn.py pp_impact --train data/meta/train.tsv \
+      ./cnn.py pp_impact --train data/meta/noclue/train.tsv \
                --val data/meta/val.tsv \
                --test data/askubuntu/test.tsv \
                --w2v models/askubuntu.w2v
     #+END_SRC
     For META Stackexchange dataset:    
     #+BEGIN_SRC sh :exports code
-      ./cnn.py pp_impact --train data/meta/train.tsv \
+      ./cnn.py pp_impact --train data/meta/noclue/train.tsv \
                --val data/meta/val.tsv \
                --test data/meta/test.tsv \
                --w2v models/meta.w2v
@@ -85,7 +86,7 @@ To change hyperparameters you can modify the method =SentenceSimilarity. set_hyp
 
 *** Impact of word embeddings
     #+BEGIN_SRC sh :exports code
-      ./cnn.py we_impact --train data/meta/train.tsv \
+      ./cnn.py we_impact --train data/meta/noclue/train.tsv \
                --val data/meta/val.tsv \
                --test data/askubuntu/test.tsv
     #+END_SRC
