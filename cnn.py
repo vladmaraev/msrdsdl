@@ -404,6 +404,7 @@ class SentenceSimilarity:
             self.conv_filter_dim = 300
             self.optimizer = 'rmsprop'
         elif mode == 'ru_word':
+            self.nb_epoch = 5
             self.conv_filters = [3,5,8,12]
             self.optimizer = 'rmsprop'
             self.embedding_dim = 300
