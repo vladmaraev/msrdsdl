@@ -16,7 +16,7 @@ from keras.layers import Activation, Convolution1D, Embedding, Merge, Lambda, me
 from keras.optimizers import SGD
 from keras.preprocessing.sequence import pad_sequences
 from keras import backend as K
-from preprocess import pp_with_duplicate_quote, pp_without_duplicate_quote, pp, ru_mystem
+from preprocess import pp_with_duplicate_quote, pp_without_duplicate_quote, pp, rus_mystem
 
 class SentenceSimilarity:
     data = {}
@@ -121,7 +121,9 @@ class SentenceSimilarity:
         time_start = time.perf_counter()
         # TODO: refactor -- filename_tokenizer only initialized when model_uuid is provided
         if not self.filename_tokenizer:
-            self.tokenizer = Tokenizer(char_level=self.char_level)
+            self.tokenizer = Tokenizer(char_level=self.char_level,
+                                       lower=False,
+                                       filters="")
             self.tokenizer.fit_on_texts(self.data['training']['texts_a'])
             self.tokenizer.fit_on_texts(self.data['training']['texts_b'])
             logging.info('...fitted tokenizer in {0:.2f} seconds;'.format(time.perf_counter() - time_start))
@@ -397,7 +399,7 @@ class SentenceSimilarity:
             self.embedding_dim = 300
             self.conv_filter_dim = 1000
         elif mode == 'ru_ns':
-            self._preprocess_text = lambda x: ru_mystem(x)
+            self._preprocess_text = lambda x: rus_mystem(x)
             self.nb_epoch = 5
             self.conv_filter_dim = 300
             self.optimizer = 'rmsprop'

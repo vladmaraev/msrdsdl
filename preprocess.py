@@ -6,17 +6,23 @@ from pymystem3 import Mystem
 
 mystem = Mystem()
 
-def ru_mystem(text, normalize=True, pos=True):
-    joined = ""
-    for an in mystem.analyze(text):
-        if an.get('analysis',None):
-            pos = an['analysis'][0]['gr'].split(",")[0]
-            lex = an['analysis'][0]['lex']
-            st = "_".join([lex,pos])
+def rus_mystem(text, lemmatize=True, pos=True):
+    analysis = [el for el in mystem.analyze(text) if 'analysis' in el]
+    tokens = [el['text'].lower() for el in analysis]    
+    lemmas = []
+    pos_tags = []
+    for el in analysis:
+        if el['analysis']:
+            lemmas.append(el['analysis'][0]['lex'])
+            pos_tags.append(re.split('[,=]',el['analysis'][0]['gr'])[0])
         else:
-            st = an['text']
-        joined += st
-    return joined.strip()
+            lemmas.append(el['text'].lower())
+            pos_tags.append('UNK')
+    if lemmatize:
+        tokens = lemmas
+    if pos:
+        tokens = ["_".join(pair) for pair in zip(tokens,pos_tags)]            
+    return ' '.join(tokens)
 
 def remove_images(text):
     text = BeautifulSoup(text, 'html.parser')
