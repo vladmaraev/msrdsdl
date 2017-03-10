@@ -161,6 +161,8 @@ if __name__ == '__main__':
         embedding_matrix = None
         clu = 1000
     model = model_cnn(embedding_matrix, word_index, dim, maxlen, clu=clu)
+    print('Model summary:')
+    model.summary()
     x_train, y_train, x_val, y_val = data
     y_train = np.reshape(y_train,(y_train.shape[0],1,1))
     y_val = np.reshape(y_val,(y_val.shape[0],1,1))
