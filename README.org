@@ -94,15 +94,14 @@ To change hyperparameters you can modify the method =SentenceSimilarity. set_hyp
 ** Portuguese Entailment Recognition
 *** Run 1
     #+BEGIN_SRC sh :exports code
-      ./cnn.py pt_1 --train data/pt/train.tsv \
-               --val data/pt/test.tsv \
+      ./cnn_padded.py pt_1 --train data/pt/train.tsv \
+               --test data/pt/test.tsv \
                --w2v models/pt.w2v
     #+END_SRC
 
 *** Run 2
     #+BEGIN_SRC sh :exports code
-      ./cnn.py pt_2 --train data/pt/train.tsv \
-               --val data/pt/test.tsv
+      ./cnn_padded.py --train data/pt/train.tsv --test data/pt/test.tsv
     #+END_SRC
 
 ** Russian Paraphrase Detection
@@ -116,12 +115,10 @@ To change hyperparameters you can modify the method =SentenceSimilarity. set_hyp
 *** Standard run
 **** Word embeddings
     #+BEGIN_SRC sh :exports code
-      ./cnn.py ru_word --train data/ru/train.tsv \
-               --val data/ru/test.tsv
+      ./cnn.py ru_word --train data/ru/train.tsv --val data/ru/test.tsv
     #+END_SRC
 
 **** Character embeddings
     #+BEGIN_SRC sh :exports code
-      ./cnn.py ru_char --train data/ru/train.tsv \
-               --val data/ru/test.tsv
+      ./cnn.py ru_char --train data/ru/train.tsv --val data/ru/test.tsv
     #+END_SRC
