@@ -109,7 +109,7 @@ def cosine(x):
 
 def model_cnn(embedding_matrix,
               word_index, dim, maxlen, clu=300):
-    if embedding_matrix:
+    if embedding_matrix != None:
         W = [embedding_matrix]
     else:
         W = None
