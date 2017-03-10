@@ -1,25 +1,21 @@
 #+TITLE: Modelling Semantic Relations with Distributional Semantics and Deep Learning: Question Answering, Entailment Recognition and Paraphrase Detection
 
 * Prerequisites
-   1. Download source code
-   2. You will need *Python version 3.4.3 or higher*
-   3. Install required packages:
+1. Download the source code.
+2. You will need *Python version 3.4.3 or higher*.
+4. Install required packages:
+#+BEGIN_SRC sh :exports code
+  pip install -r requirements.txt
+#+END_SRC
+4. Set up Theano backend for Keras according to the documentation: https://keras.io/backend/
+5. If you want to run experiments that require word embeddings you need to download and extract distributional models:
       #+BEGIN_SRC sh :exports code
-        pip install -r requirements.txt
-      #+END_SRC
-   4. If you want to run experiments that require word embeddings you need to download and extract distributional models:
-      #+BEGIN_SRC sh :exports code
-        wget http://lxcenter.di.fc.ul.pt/datasets/msrdsdl.tar.gz
-      #+END_SRC
-
-      #+BEGIN_SRC sh :exports code
-        tar -xvf vlad.tar.gz
+        tar -xvf models.tar.gz
       #+END_SRC
 
 * About the program
 After installing all the prerequisites you will have the following directory structure: 
 #+BEGIN_SRC 
-├── cnn_padded.py
 ├── cnn.py
 ├── data                       # Datasets:
 │   ├── askubuntu              # -- QA: AskUbuntu
@@ -105,14 +101,14 @@ To change hyperparameters you can modify the method =SentenceSimilarity. set_hyp
 ** Portuguese Entailment Recognition
 *** Run 1
     #+BEGIN_SRC sh :exports code
-      ./cnn_padded.py pt_1 --train data/pt/train.tsv \
+      ./cnn.py pt_1 --train data/pt/train.tsv \
                --test data/pt/test.tsv \
                --w2v models/pt.w2v
     #+END_SRC
 
 *** Run 2
     #+BEGIN_SRC sh :exports code
-      ./cnn_padded.py --train data/pt/train.tsv --test data/pt/test.tsv
+      ./cnn.py pt_2 --train data/pt/train.tsv --test data/pt/test.tsv
     #+END_SRC
 
 ** Russian Paraphrase Detection
