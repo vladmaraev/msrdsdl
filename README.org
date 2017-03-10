@@ -19,29 +19,40 @@
 * About the program
 After installing all the prerequisites you will have the following directory structure: 
 #+BEGIN_SRC 
-├── cnn.py                    # Main application		             
-├── data               	      # Datasets: 			     
-│   ├── askubuntu      	      # - QA: AskUbuntu		     
-│   │   ├── test.tsv	                                            
-│   │   ├── train.tsv	                                            
-│   │   └── val.tsv	                                            
-│   ├── meta           	      # - QA: Meta StackExchange	     
-│   │   ├── test.tsv	                                            
-│   │   ├── train.tsv	                                            
-│   │   └── val.tsv	                                            
-│   ├── pt             	      # - Portuguese Entailment Recognition 
-│   │   ├── test.tsv	                                            
-│   │   └── train.tsv	                                            
-│   └── ru             	      # - Russian Paraphrase Detection      
-│       ├── test.tsv	                                            
-│       └── train.tsv	                                            
-├── __init.py__		                                            
-├── models             	      # - Distributional semantic models    
-│   ├── askubuntu.w2v	                                            
-│   ├── meta.w2v	                                            
-│   ├── pt.w2v		                                            
-│   └── ruscorpora.model.w2v				     
-├── preprocess.py      	      # Preprocessing functions	     
+├── cnn_padded.py
+├── cnn.py
+├── data                       # Datasets:
+│   ├── askubuntu              # -- QA: AskUbuntu
+│   │   ├── clue
+│   │   │   ├── test.tsv
+│   │   │   ├── train.tsv
+│   │   │   └── val.tsv
+│   │   └── noclue
+│   │       ├── test.tsv
+│   │       ├── train.tsv
+│   │       └── val.tsv
+│   ├── meta                   # -- QA: Meta StackExchange
+│   │   ├── clue
+│   │   │   ├── test.tsv
+│   │   │   ├── train.tsv
+│   │   │   └── val.tsv
+│   │   └── noclue
+│   │       ├── test.tsv
+│   │       ├── train.tsv
+│   │       └── val.tsv
+│   ├── pt                     # -- Portuguese Entailment Recognition
+│   │   ├── test.csv
+│   │   ├── train.csv
+│   └── ru                     # -- Russian Paraphrase Detection
+│       ├── test.tsv
+│       └── train.tsv
+├── __init.py__
+├── models                     # Distributional semantic models
+│   ├── askubuntu.w2v
+│   ├── meta.w2v
+│   ├── pt.w2v
+│   └── ruscorpora.model.w2v
+├── preprocess.py              # Preprocessing functions
 ├── README.org
 └── requirements.txt
 #+END_SRC
