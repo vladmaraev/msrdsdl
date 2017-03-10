@@ -124,7 +124,7 @@ def model_cnn(embedding_matrix,
     q1_emb = embedding_layer(x1)
     q2_emb = embedding_layer(x2)
     convolution = Convolution1D(filter_length=3,
-                                nb_filter=300,
+                                nb_filter=clu,
                                 activation='tanh',
                                 border_mode='same')
     q1_conv = convolution(q1_emb)
