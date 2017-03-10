@@ -1,6 +1,6 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 """Usage:
-    cnn_padded.py --w2v=FILE --train=FILE --test=FILE
+    cnn_padded.py  --train=FILE --test=FILE [--w2v=FILE]
 """
 
 import csv
@@ -108,7 +108,7 @@ def cosine(x):
     return dot(x[0], x[1]) / K.sqrt(dot(x[0], x[0]) * dot(x[1], x[1]))
 
 def model_cnn(embedding_matrix,
-              word_index, dim, maxlen):
+              word_index, dim, maxlen, clu=300):
     if embedding_matrix:
         W = [embedding_matrix]
     else:
@@ -156,9 +156,11 @@ if __name__ == '__main__':
         embedding_matrix = create_embedding_matrix(args['--w2v'],
                                                    dim,
                                                    word_index)
+        clu = 300
     else:
         embedding_matrix = None
-    model = model_cnn(embedding_matrix, word_index, dim, maxlen)
+        clu = 1000
+    model = model_cnn(embedding_matrix, word_index, dim, maxlen, clu=clu)
     x_train, y_train, x_val, y_val = data
     y_train = np.reshape(y_train,(y_train.shape[0],1,1))
     y_val = np.reshape(y_val,(y_val.shape[0],1,1))
