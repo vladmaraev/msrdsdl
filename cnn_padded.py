@@ -152,7 +152,7 @@ if __name__ == '__main__':
     maxlen, word_index, data = prepare_data(raw_data,
                                             raw_data_t,
                                             labels_index=labels_index)
-    if args['--w2v']:
+    if args['--w2v'] != None:
         embedding_matrix = create_embedding_matrix(args['--w2v'],
                                                    dim,
                                                    word_index)
