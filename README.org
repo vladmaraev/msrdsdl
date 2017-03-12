@@ -1,61 +1,72 @@
 #+TITLE: Modelling Semantic Relations with Distributional Semantics and Deep Learning: Question Answering, Entailment Recognition and Paraphrase Detection
 
 * Prerequisites
-1. Download the source code.
-2. You will need *Python version 3.4.3 or higher*.
+1. Download the source code: http://nlx-server.di.fc.ul.pt/~vlad/msrdsdl.tar.gz (username and password are provided upon request).
+2. Extract the code:
+   #+BEGIN_SRC sh
+     tar -xvf msrdsl.tar.gz
+     cd msrdsdl
+   #+END_SRC
+3. You will need *Python version 3.4.3 or higher*.
 4. Install required packages:
-#+BEGIN_SRC sh :exports code
-  pip install -r requirements.txt
-#+END_SRC
-4. Set up Theano backend for Keras according to the documentation: https://keras.io/backend/
-5. If you want to run experiments that require word embeddings you need to download and extract distributional models:
-      #+BEGIN_SRC sh :exports code
-        tar -xvf models.tar.gz
-      #+END_SRC
+   #+BEGIN_SRC sh :exports code
+     pip install -r requirements.txt
+   #+END_SRC
+5. Set up Theano backend for Keras according to the documentation: https://keras.io/backend/
+6. If you want to run experiments that require word embeddings you need to download and extract distributional models:
+   #+BEGIN_SRC sh :exports code
+     wget http://nlx-server.di.fc.ul.pt/~vlad/models.tar.gz
+     tar -xvf models.tar.gz
+   #+END_SRC
 
 * About the program
-After installing all the prerequisites you will have the following directory structure: 
+After satisfying all the prerequisites you will have the following directory structure: 
 #+BEGIN_SRC 
-├── cnn.py
-├── data                       # Datasets:
-│   ├── askubuntu              # -- QA: AskUbuntu
-│   │   ├── clue
-│   │   │   ├── test.tsv
-│   │   │   ├── train.tsv
-│   │   │   └── val.tsv
-│   │   └── noclue
-│   │       ├── test.tsv
-│   │       ├── train.tsv
-│   │       └── val.tsv
-│   ├── meta                   # -- QA: Meta StackExchange
-│   │   ├── clue
-│   │   │   ├── test.tsv
-│   │   │   ├── train.tsv
-│   │   │   └── val.tsv
-│   │   └── noclue
-│   │       ├── test.tsv
-│   │       ├── train.tsv
-│   │       └── val.tsv
-│   ├── pt                     # -- Portuguese Entailment Recognition
-│   │   ├── test.csv
-│   │   ├── train.csv
-│   └── ru                     # -- Russian Paraphrase Detection
-│       ├── test.tsv
-│       └── train.tsv
-├── __init.py__
-├── models                     # Distributional semantic models
-│   ├── askubuntu.w2v
-│   ├── meta.w2v
-│   ├── pt.w2v
-│   └── ruscorpora.model.w2v
-├── preprocess.py              # Preprocessing functions
-├── README.org
-└── requirements.txt
+|-- cnn.py
+|-- data
+|   |-- askubuntu
+|   |   |-- clue
+|   |   |   |-- test.tsv
+|   |   |   |-- train.tsv
+|   |   |   '-- val.tsv
+|   |   '-- noclue
+|   |       |-- test.tsv
+|   |       |-- train.tsv
+|   |       '-- val.tsv
+|   |-- meta
+|   |   |-- clue
+|   |   |   |-- test.tsv
+|   |   |   |-- train.tsv
+|   |   |   '-- val.tsv
+|   |   '-- noclue
+|   |       |-- test.tsv
+|   |       |-- train.tsv
+|   |       '-- val.tsv
+|   |-- pt
+|   |   |-- test.csv
+|   |   |-- test.tsv
+|   |   |-- test.tsv~
+|   |   |-- train.csv
+|   |   |-- train.tsv
+|   |   '-- train.tsv~
+|   '-- ru
+|       |-- test.tsv
+|       '-- train.tsv
+|-- __init.py__
+|-- models
+|   |-- askubuntu.w2v
+|   |-- meta.w2v
+|   |-- pt.w2v
+|   |-- pt.w2v.min.cache.npy
+|   '-- ruscorpora.model.w2v
+|-- preprocess.py
+|-- README.org
+'-- requirements.txt
 #+END_SRC
 
 You can run the application =./cnn.py= with the =--help= argument to see available parameters.
 
-To change hyperparameters you can modify the method =SentenceSimilarity. set_hyperparameters= by adding new modes. 
+To change hyperparameters you can modify the method =SentenceSimilarity.set_hyperparameters= by adding new modes. 
 
 * Replication of my work
 ** Question Answering
