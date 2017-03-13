@@ -66,7 +66,7 @@ After satisfying all the prerequisites you will have the following directory str
 
 You can run the application =./cnn.py= with the =--help= argument to see available parameters.
 
-To change hyperparameters you can modify the method =SentenceSimilarity.set_hyperparameters= by adding new modes. 
+To change hyperparameters you can modify the method =SentenceSimilarity. set_hyperparameters= by adding new modes. 
 
 * Replication of my work
 ** Question Answering
@@ -89,37 +89,37 @@ To change hyperparameters you can modify the method =SentenceSimilarity.set_hype
 *** Impact of text preprocessing
     For AskUbuntu dataset:
     #+BEGIN_SRC sh :exports code
-      ./cnn.py pp_impact --train data/meta/noclue/train.tsv \
-               --val data/meta/val.tsv \
-               --test data/askubuntu/test.tsv \
+      ./cnn.py pp_impact --train data/askubuntu/noclue/train.tsv \
+               --val data/askubuntu/noclue/val.tsv \
+               --test data/askubuntu/noclue/test.tsv \
                --w2v models/askubuntu.w2v
     #+END_SRC
     For META Stackexchange dataset:    
     #+BEGIN_SRC sh :exports code
       ./cnn.py pp_impact --train data/meta/noclue/train.tsv \
-               --val data/meta/val.tsv \
-               --test data/meta/test.tsv \
+               --val data/meta/noclue/val.tsv \
+               --test data/meta/noclue/test.tsv \
                --w2v models/meta.w2v
     #+END_SRC
 
 *** Impact of word embeddings
     #+BEGIN_SRC sh :exports code
-      ./cnn.py we_impact --train data/meta/noclue/train.tsv \
-               --val data/meta/val.tsv \
-               --test data/askubuntu/test.tsv
+      ./cnn.py we_impact --train data/askubuntu/noclue/train.tsv \
+               --val data/askubuntu/noclue/val.tsv \
+               --test data/askubuntu/noclue/test.tsv
     #+END_SRC
 
 ** Portuguese Entailment Recognition
 *** Run 1
     #+BEGIN_SRC sh :exports code
       ./cnn.py pt_1 --train data/pt/train.tsv \
-               --test data/pt/test.tsv \
+               --val data/pt/test.tsv \
                --w2v models/pt.w2v
     #+END_SRC
 
 *** Run 2
     #+BEGIN_SRC sh :exports code
-      ./cnn.py pt_2 --train data/pt/train.tsv --test data/pt/test.tsv
+      ./cnn.py pt_2 --train data/pt/train.tsv --val data/pt/test.tsv
     #+END_SRC
 
 ** Russian Paraphrase Detection

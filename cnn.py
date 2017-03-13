@@ -393,11 +393,11 @@ class SentenceSimilarity:
         if mode in ['pp_impact', 'we_impact']:
             self._preprocess_text = lambda x: pp_without_duplicate_quote(x)
         elif mode == 'pt_1':
-            self.nb_epoch = 10
+            self.nb_epoch = 5
             self._preprocess_text = lambda x: pp(x)
         elif mode == 'pt_2':
             self._preprocess_text = lambda x: pp(x)
-            self.nb_epoch = 10
+            self.nb_epoch = 5
             self.embedding_dim = 400
             self.conv_filter_dim = 1000
         elif mode == 'ru_ns':
