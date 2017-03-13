@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>Modelling Semantic Relations with Distributional Semantics and Deep Learning: Question Answering, Entailment Recognition and Paraphrase Detection</title>
+<!-- 2017-03-13 Mon 10:53 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Org-mode">
+<meta name="author" content="Vladislav Maraev">
+
+<link  href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<style type="text/css">
+/* org mode styles on top of twbs */
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    font-size: 18px;
+    margin-bottom: 105px;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 101px;
+    background-color: #f5f5f5;
+}
+
+footer > div {
+    padding: 10px;
+}
+
+footer p {
+    margin: 0 0 5px;
+    text-align: center;
+    font-size: 16px;
+}
+
+#table-of-contents {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+blockquote p {
+    font-size: 18px;
+}
+
+pre {
+    font-size: 16px;
+}
+
+.footpara {
+    display: inline-block;
+}
+
+figcaption {
+  font-size: 16px;
+  color: #666;
+  font-style: italic;
+  padding-bottom: 15px;
+}
+
+/* from twbs docs */
+
+.bs-docs-sidebar.affix {
+    position: static;
+}
+@media (min-width: 768px) {
+    .bs-docs-sidebar {
+        padding-left: 20px;
+    }
+}
+
+/* All levels of nav */
+.bs-docs-sidebar .nav > li > a {
+    display: block;
+    padding: 4px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #999;
+}
+.bs-docs-sidebar .nav > li > a:hover,
+.bs-docs-sidebar .nav > li > a:focus {
+    padding-left: 19px;
+    color: #A1283B;
+    text-decoration: none;
+    background-color: transparent;
+    border-left: 1px solid #A1283B;
+}
+.bs-docs-sidebar .nav > .active > a,
+.bs-docs-sidebar .nav > .active:hover > a,
+.bs-docs-sidebar .nav > .active:focus > a {
+    padding-left: 18px;
+    font-weight: bold;
+    color: #A1283B;
+    background-color: transparent;
+    border-left: 2px solid #A1283B;
+}
+
+/* Nav: second level (shown on .active) */
+.bs-docs-sidebar .nav .nav {
+    display: none; /* Hide by default, but at >768px, show it */
+    padding-bottom: 10px;
+}
+.bs-docs-sidebar .nav .nav > li > a {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 30px;
+    font-size: 12px;
+    font-weight: normal;
+}
+.bs-docs-sidebar .nav .nav > li > a:hover,
+.bs-docs-sidebar .nav .nav > li > a:focus {
+    padding-left: 29px;
+}
+.bs-docs-sidebar .nav .nav > .active > a,
+.bs-docs-sidebar .nav .nav > .active:hover > a,
+.bs-docs-sidebar .nav .nav > .active:focus > a {
+    padding-left: 28px;
+    font-weight: 500;
+}
+
+/* Nav: third level (shown on .active) */
+.bs-docs-sidebar .nav .nav .nav {
+    padding-bottom: 10px;
+}
+.bs-docs-sidebar .nav .nav .nav > li > a {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 40px;
+    font-size: 12px;
+    font-weight: normal;
+}
+.bs-docs-sidebar .nav .nav .nav > li > a:hover,
+.bs-docs-sidebar .nav .nav .nav > li > a:focus {
+    padding-left: 39px;
+}
+.bs-docs-sidebar .nav .nav .nav > .active > a,
+.bs-docs-sidebar .nav .nav .nav > .active:hover > a,
+.bs-docs-sidebar .nav .nav .nav > .active:focus > a {
+    padding-left: 38px;
+    font-weight: 500;
+}
+
+/* Show and affix the side nav when space allows it */
+@media (min-width: 992px) {
+    .bs-docs-sidebar .nav > .active > ul {
+        display: block;
+    }
+    /* Widen the fixed sidebar */
+    .bs-docs-sidebar.affix,
+    .bs-docs-sidebar.affix-bottom {
+        width: 213px;
+    }
+    .bs-docs-sidebar.affix {
+        position: fixed; /* Undo the static from mobile first approach */
+        top: 20px;
+    }
+    .bs-docs-sidebar.affix-bottom {
+        position: absolute; /* Undo the static from mobile first approach */
+    }
+    .bs-docs-sidebar.affix .bs-docs-sidenav,.bs-docs-sidebar.affix-bottom .bs-docs-sidenav {
+        margin-top: 0;
+        margin-bottom: 0
+    }
+}
+@media (min-width: 1200px) {
+    /* Widen the fixed sidebar again */
+    .bs-docs-sidebar.affix-bottom,
+    .bs-docs-sidebar.affix {
+        width: 263px;
+    }
+}
+</style>
+<script type="text/javascript">
+$(function() {
+    'use strict';
+
+    $('.bs-docs-sidebar li').first().addClass('active');
+
+    $(document.body).scrollspy({target: '.bs-docs-sidebar'});
+
+    $('.bs-docs-sidebar').affix();
+});
+</script>
+</head>
+<body>
+<div id="content" class="container">
+<div class="row"><div class="col-md-9"><h1 class="title">Modelling Semantic Relations with Distributional Semantics and Deep Learning: Question Answering, Entailment Recognition and Paraphrase Detection</h1>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Prerequisites</h2>
+<div class="outline-text-2" id="text-1">
+<ol class="org-ol">
+<li>Download the source code: <a href="http://nlx-server.di.fc.ul.pt/~vlad/msrdsdl.tar.gz">http://nlx-server.di.fc.ul.pt/~vlad/msrdsdl.tar.gz</a> (username and password are provided upon request).
+</li>
+<li>Extract the code:
+<div class="org-src-container">
+
+<pre class="src src-sh">tar -xvf msrdsl.tar.gz
+cd msrdsdl
+</pre>
+</div>
+</li>
+<li>You will need <b>Python version 3.4.3 or higher</b>.
+</li>
+<li>Install required packages:
+<div class="org-src-container">
+
+<pre class="src src-sh">pip install -r requirements.txt
+</pre>
+</div>
+</li>
+<li>Set up Theano backend for Keras according to the documentation: <a href="https://keras.io/backend/">https://keras.io/backend/</a>
+</li>
+<li>If you want to run experiments that require word embeddings you need to download and extract distributional models:
+<div class="org-src-container">
+
+<pre class="src src-sh">wget http://nlx-server.di.fc.ul.pt/~vlad/models.tar.gz
+tar -xvf models.tar.gz
+</pre>
+</div>
+</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> About the program</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+After satisfying all the prerequisites you will have the following directory structure: 
+</p>
+<pre class="example">
+|-- cnn.py
+|-- data
+|   |-- askubuntu
+|   |   |-- clue
+|   |   |   |-- test.tsv
+|   |   |   |-- train.tsv
+|   |   |   '-- val.tsv
+|   |   '-- noclue
+|   |       |-- test.tsv
+|   |       |-- train.tsv
+|   |       '-- val.tsv
+|   |-- meta
+|   |   |-- clue
+|   |   |   |-- test.tsv
+|   |   |   |-- train.tsv
+|   |   |   '-- val.tsv
+|   |   '-- noclue
+|   |       |-- test.tsv
+|   |       |-- train.tsv
+|   |       '-- val.tsv
+|   |-- pt
+|   |   |-- test.csv
+|   |   |-- test.tsv
+|   |   |-- test.tsv~
+|   |   |-- train.csv
+|   |   |-- train.tsv
+|   |   '-- train.tsv~
+|   '-- ru
+|       |-- test.tsv
+|       '-- train.tsv
+|-- __init.py__
+|-- models
+|   |-- askubuntu.w2v
+|   |-- meta.w2v
+|   |-- pt.w2v
+|   |-- pt.w2v.min.cache.npy
+|   '-- ruscorpora.model.w2v
+|-- preprocess.py
+|-- README.org
+'-- requirements.txt
+</pre>
+
+<p>
+You can run the application <code>./cnn.py</code> with the <code>--help</code> argument to see available parameters.
+</p>
+
+<p>
+To change hyperparameters you can modify the method <code>SentenceSimilarity. set_hyperparameters</code> by adding new modes. 
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Replication of my work</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Question Answering</h3>
+<div class="outline-text-3" id="text-3-1">
+</div><div id="outline-container-sec-3-1-1" class="outline-4">
+<h4 id="sec-3-1-1"><span class="section-number-4">3.1.1</span> Replication of the work by Bogdanova et al. (2015)</h4>
+<div class="outline-text-4" id="text-3-1-1">
+<p>
+For AskUbuntu dataset:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">./cnn.py replication --train data/askubuntu/clue/train.tsv \
+         --val data/askubuntu/clue/val.tsv \
+         --test data/askubuntu/clue/test.tsv \
+         --w2v models/askubuntu.w2v
+</pre>
+</div>
+<p>
+For META Stackexchange dataset:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">./cnn.py replication --train data/meta/clue/train.tsv \
+         --val data/meta/clue/val.tsv \
+         --test data/meta/clue/test.tsv \
+         --w2v models/meta.w2v
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3-1-2" class="outline-4">
+<h4 id="sec-3-1-2"><span class="section-number-4">3.1.2</span> Impact of text preprocessing</h4>
+<div class="outline-text-4" id="text-3-1-2">
+<p>
+For AskUbuntu dataset:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">./cnn.py pp_impact --train data/askubuntu/noclue/train.tsv \
+         --val data/askubuntu/noclue/val.tsv \
+         --test data/askubuntu/noclue/test.tsv \
+         --w2v models/askubuntu.w2v
+</pre>
+</div>
+<p>
+For META Stackexchange dataset:    
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">./cnn.py pp_impact --train data/meta/noclue/train.tsv \
+         --val data/meta/noclue/val.tsv \
+         --test data/meta/noclue/test.tsv \
+         --w2v models/meta.w2v
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3-1-3" class="outline-4">
+<h4 id="sec-3-1-3"><span class="section-number-4">3.1.3</span> Impact of word embeddings</h4>
+<div class="outline-text-4" id="text-3-1-3">
+<div class="org-src-container">
+
+<pre class="src src-sh">./cnn.py we_impact --train data/askubuntu/noclue/train.tsv \
+         --val data/askubuntu/noclue/val.tsv \
+         --test data/askubuntu/noclue/test.tsv
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> Portuguese Entailment Recognition</h3>
+<div class="outline-text-3" id="text-3-2">
+</div><div id="outline-container-sec-3-2-1" class="outline-4">
+<h4 id="sec-3-2-1"><span class="section-number-4">3.2.1</span> Run 1</h4>
+<div class="outline-text-4" id="text-3-2-1">
+<div class="org-src-container">
+
+<pre class="src src-sh">./cnn.py pt_1 --train data/pt/train.tsv \
+         --val data/pt/test.tsv \
+         --w2v models/pt.w2v
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3-2-2" class="outline-4">
+<h4 id="sec-3-2-2"><span class="section-number-4">3.2.2</span> Run 2</h4>
+<div class="outline-text-4" id="text-3-2-2">
+<div class="org-src-container">
+
+<pre class="src src-sh">./cnn.py pt_2 --train data/pt/train.tsv --val data/pt/test.tsv
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> Russian Paraphrase Detection</h3>
+<div class="outline-text-3" id="text-3-3">
+</div><div id="outline-container-sec-3-3-1" class="outline-4">
+<h4 id="sec-3-3-1"><span class="section-number-4">3.3.1</span> Non-standard run</h4>
+<div class="outline-text-4" id="text-3-3-1">
+<div class="org-src-container">
+
+<pre class="src src-sh">./cnn.py ru_ns --train data/ru/train.tsv \
+         --val data/ru/test.tsv \
+         --w2v models/ruscorpora.model.w2v
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3-3-2" class="outline-4">
+<h4 id="sec-3-3-2"><span class="section-number-4">3.3.2</span> Standard run</h4>
+<div class="outline-text-4" id="text-3-3-2">
+</div><ol class="org-ol"><li><a id="sec-3-3-2-1" name="sec-3-3-2-1"></a>Word embeddings<br ><div class="outline-text-5" id="text-3-3-2-1">
+<div class="org-src-container">
+
+<pre class="src src-sh">./cnn.py ru_word --train data/ru/train.tsv --val data/ru/test.tsv
+</pre>
+</div>
+</div>
+</li>
+
+<li><a id="sec-3-3-2-2" name="sec-3-3-2-2"></a>Character embeddings<br ><div class="outline-text-5" id="text-3-3-2-2">
+<div class="org-src-container">
+
+<pre class="src src-sh">./cnn.py ru_char --train data/ru/train.tsv --val data/ru/test.tsv
+</pre>
+</div>
+</div>
+</li></ol>
+</div>
+</div>
+</div>
+</div><div class="col-md-3"><nav id="table-of-contents">
+<div id="text-table-of-contents" class="bs-docs-sidebar">
+<ul class="nav">
+<li><a href="#sec-1">1. Prerequisites</a></li>
+<li><a href="#sec-2">2. About the program</a></li>
+<li><a href="#sec-3">3. Replication of my work</a>
+<ul class="nav">
+<li><a href="#sec-3-1">3.1. Question Answering</a></li>
+<li><a href="#sec-3-2">3.2. Portuguese Entailment Recognition</a></li>
+<li><a href="#sec-3-3">3.3. Russian Paraphrase Detection</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</nav>
+</div></div></div>
+<footer id="postamble" class="">
+<div><p class="author">Author: Vladislav Maraev</p>
+<p class="date">Created: 2017-03-13 Mon 10:53</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 25.2.1 (<a href="http://orgmode.org">Org-mode</a> 9.0.5)</p>
+</div>
+</footer>
+</body>
+</html>
