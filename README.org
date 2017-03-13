@@ -43,12 +43,8 @@ After satisfying all the prerequisites you will have the following directory str
 |   |       |-- train.tsv
 |   |       '-- val.tsv
 |   |-- pt
-|   |   |-- test.csv
 |   |   |-- test.tsv
-|   |   |-- test.tsv~
-|   |   |-- train.csv
 |   |   |-- train.tsv
-|   |   '-- train.tsv~
 |   '-- ru
 |       |-- test.tsv
 |       '-- train.tsv
@@ -57,7 +53,6 @@ After satisfying all the prerequisites you will have the following directory str
 |   |-- askubuntu.w2v
 |   |-- meta.w2v
 |   |-- pt.w2v
-|   |-- pt.w2v.min.cache.npy
 |   '-- ruscorpora.model.w2v
 |-- preprocess.py
 |-- README.org
