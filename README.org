@@ -1,7 +1,7 @@
 #+TITLE: Modelling Semantic Relations with Distributional Semantics and Deep Learning: Question Answering, Entailment Recognition and Paraphrase Detection
 
 * Prerequisites
-1. Download the source code: http://nlx-server.di.fc.ul.pt/~vlad/msrdsdl.tar.gz (username and password are provided upon request).
+1. Download the source code: http://nlx-server.di.fc.ul.pt/dissertations/Maraev/msrdsdl.tar.gz (username and password are provided upon request).
 2. Extract the code:
    #+BEGIN_SRC sh
      tar -xvf msrdsl.tar.gz
@@ -12,10 +12,10 @@
    #+BEGIN_SRC sh :exports code
      pip install -r requirements.txt
    #+END_SRC
-5. Set up Theano backend for Keras according to the documentation: https://keras.io/backend/
+5. Set up Theano backend for Keras by editing the configuration file =~/.keras/keras.json= and changing the field =backend= to ="theano"=.
 6. If you want to run experiments that require word embeddings you need to download and extract distributional models:
    #+BEGIN_SRC sh :exports code
-     wget http://nlx-server.di.fc.ul.pt/~vlad/models.tar.gz
+     wget http://nlx-server.di.fc.ul.pt/dissertations/Maraev/models.tar.gz
      tar -xvf models.tar.gz
    #+END_SRC
 
@@ -86,7 +86,7 @@ To change hyperparameters you can modify the method =SentenceSimilarity. set_hyp
                --w2v models/meta.w2v
     #+END_SRC
 
-*** Impact of text preprocessing
+*** Impact of text preprocessing (clue phrases removed)
     For AskUbuntu dataset:
     #+BEGIN_SRC sh :exports code
       ./cnn.py pp_impact --train data/askubuntu/noclue/train.tsv \
@@ -102,7 +102,7 @@ To change hyperparameters you can modify the method =SentenceSimilarity. set_hyp
                --w2v models/meta.w2v
     #+END_SRC
 
-*** Impact of word embeddings
+*** Impact of word embeddings (no pre-trained word embeddings)
     #+BEGIN_SRC sh :exports code
       ./cnn.py we_impact --train data/askubuntu/noclue/train.tsv \
                --val data/askubuntu/noclue/val.tsv \
