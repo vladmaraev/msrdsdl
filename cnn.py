@@ -4,7 +4,8 @@ import os.path
 import argparse
 import logging
 import time
-import progressbar
+from tqdm import tqdm
+import mmap
 import uuid
 import pickle
 import numpy as np
@@ -92,8 +93,7 @@ class SentenceSimilarity:
         data_ref['texts_label'] = []
         class_count = {}        
         with open(filename) as handle:
-            bar = progressbar.ProgressBar()
-            for line in bar(handle):
+            for line in tqdm(handle):
                 if len(line.strip().split(separator)) != 3:
                     print(line)
                 label, text_a, text_b = line.strip().split(separator)
@@ -284,8 +284,7 @@ class SentenceSimilarity:
         sum_accuracy = 0.0
         assert mode in self._data_sets
         if mode == 'training':            
-            bar = progressbar.ProgressBar()
-            for i in bar(range(len(y))):
+            for i in tqdm(range(len(y))):
                 x_a = np.array([x[0][i]])
                 x_b = np.array([x[1][i]])
                 y_i = np.array([y[i]])
