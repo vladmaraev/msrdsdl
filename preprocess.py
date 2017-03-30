@@ -5,7 +5,6 @@ from functools import reduce
 from pymystem3 import Mystem
 
 mystem = Mystem()
-nltk.download()
 
 def rus_mystem(text, lemmatize=True, pos=True):
     analysis = [el for el in mystem.analyze(text) if 'analysis' in el]
