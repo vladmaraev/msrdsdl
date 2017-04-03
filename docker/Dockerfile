@@ -45,7 +45,7 @@ EXPOSE 8888
 
 CMD jupyter notebook --port=8888 --ip=0.0.0.0
 
-ADD ~/asset /src
+ADD /home/asset /src/asset
 RUN git clone https://github.com/vladmaraev/msrdsdl.git #redo
 
 RUN pip install -r msrdsdl/requirements.txt
