@@ -391,6 +391,9 @@ class SentenceSimilarity:
     def set_hyperparameters(self,mode='replicate'):
         if mode in ['pp_impact', 'we_impact']:
             self._preprocess_text = lambda x: pp_without_duplicate_quote(x)
+        elif mode == 'pp_impact_20_split':
+            self._preprocess_text = lambda x: pp_without_duplicate_quote(x)
+            self.validation_split = 0.2
         elif mode == 'pt_1':
             self.nb_epoch = 5
             self._preprocess_text = lambda x: pp(x)
@@ -416,6 +419,22 @@ class SentenceSimilarity:
             self.optimizer = 'rmsprop'
             self.nb_epoch = 20
             self.char_level = True
+        elif mode == 'char':
+            self._preprocess_text = lambda x: pp(x)
+            self.conv_filters = [2,3,5,7,9,11]
+            self.conv_filter_dim = 100
+            self.embedding_dim = 100
+            self.optimizer = 'rmsprop'
+            self.nb_epoch = 20
+            self.char_level = True
+        elif mode == 'word':
+            self._preprocess_text = lambda x: pp(x)
+            self.conv_filters = [2,3,5]
+            self.conv_filter_dim = 100
+            self.embedding_dim = 200
+            self.optimizer = 'sgd'
+            self.nb_epoch = 20
+            self.char_level = False
         else:
             self._preprocess_text = lambda x: pp_with_duplicate_quote(x)
             
@@ -460,7 +479,7 @@ def main():
     # classifier.nb_epoch = 10
     # classifier.optimizer = 'sgd'
     # classifier.lr = 0.005
-    # classifier.validation_split = 0.1
+    classifier.validation_split = 0.2
     # classifier.embedding_dim = 100
     # classifier.conv_filter_dim = 300
     # classifier.conv_filters = [3]
