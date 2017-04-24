@@ -1,0 +1,6 @@
+* Russian Paraphrases
+|         | Jaccard | SVM-bas | SVM-adv | CNN-char | CNN-word | DNN | DCNN |
+|---------+---------+---------+---------+----------+----------+-----+------|
+| Russian |         |         |         |          |          |     |      |
+| English |         |         |         |          |          |     |      |
+
