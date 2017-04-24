@@ -39,14 +39,12 @@ RUN conda install -y python=${python_version} && \
 
 ENV PYTHONPATH='/src/:$PYTHONPATH'
 
-WORKDIR /src
-
 EXPOSE 8888
 
 CMD jupyter notebook --port=8888 --ip=0.0.0.0
 
-ADD /home/asset /src/asset
-RUN git clone https://github.com/vladmaraev/msrdsdl.git #redo
+ADD . /msrdsdl
+WORKDIR /msrdsdl
 
 RUN pip install -r msrdsdl/requirements.txt
 
