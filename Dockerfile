@@ -17,16 +17,8 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en  
 ENV LC_ALL en_US.UTF-8  
 
-ENV NB_USER keras
-ENV NB_UID 1000
-
-RUN useradd -m -s /bin/bash -N -u $NB_UID $NB_USER && \
-    mkdir -p $CONDA_DIR && \
-    chown keras $CONDA_DIR -R && \
-    mkdir -p /src && \
-    chown keras /src
-
-USER keras
+COPY . /src
+WORKDIR /src
 
 # Python
 ARG python_version=3.6.1
@@ -39,13 +31,7 @@ RUN conda install -y python=${python_version} && \
 
 ENV PYTHONPATH='/src/:$PYTHONPATH'
 
-EXPOSE 8888
 
-CMD jupyter notebook --port=8888 --ip=0.0.0.0
-
-ADD . /msrdsdl
-WORKDIR /msrdsdl
-
-RUN pip install -r msrdsdl/requirements.txt
+RUN pip install -r requirements.txt
 
 RUN python -m nltk.downloader punkt
