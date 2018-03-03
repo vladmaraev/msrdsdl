@@ -150,7 +150,7 @@ class SentenceSimilarity:
         """
         cache_filename = '{0}.min.cache.npy'.format(self.filename_embeddings)
         embeddings = {}
-        if False:#os.path.isfile(cache_filename):
+        if os.path.isfile(cache_filename):
             logging.info('Load embeddings from cached file {0}:'.format(cache_filename))
             self.embedding_matrix = np.load(cache_filename)
             self.embedding_dim = self.embedding_matrix.shape[1]
